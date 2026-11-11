@@ -18,7 +18,7 @@ The central software quality engineering question is whether an inspection progr
 | Demo | Successfully generated two cases and a JSON report |
 | Sensitivity experiment | 48 measured conditions saved in `experiment_output/sensitivity.csv` |
 | Spacing experiment | Script exists as `waferguard/seperation.py`. Its results have not yet been reviewed |
-| GitHub automation | Workflow file added. A successful GitHub run still needs verification |
+| GitHub automation | First GitHub qualification run passed, including test-report upload |
 
 The 27 passing tests describe the selected test cases. The sensitivity experiment deliberately includes difficult conditions that the inspector can miss.
 
@@ -320,9 +320,9 @@ The workflow is `.github/workflows/qualification.yml`. It triggers on pushes, pu
 
 On a fresh Linux runner, it downloads the repository, selects Python 3.12, installs dependencies, and runs pytest. Pytest writes `qualification-results.xml`, a structured JUnit-format report. The final workflow step attempts to upload that report even when tests fail.
 
-After committing and pushing the workflow to a GitHub repository, open its Actions tab, select the WaferGuard qualification run, inspect the test log, and download the report artifact. A failed pytest command makes the job fail. Branch protection would be a separate repository setting if you wanted a passing check to be required before merging.
+The project is published at https://github.com/ganesan98/WaferGuard. Open its Actions tab, select the WaferGuard qualification run, inspect the test log, and download the report artifact. A failed pytest command makes the job fail. Branch protection would be a separate repository setting if you wanted a passing check to be required before merging.
 
-The workflow file is installed locally. Its first successful hosted run still needs verification. GitHub executes the qualification suite; the two exploratory experiments are run separately with the commands above.
+The first hosted qualification run completed successfully, including tests and report upload. [View the verified run](https://github.com/ganesan98/WaferGuard/actions/runs/42970433076). GitHub executes the qualification suite; the two exploratory experiments are run separately with the commands above.
 
 `.gitignore` includes `.venv312/`, `experiment_output/`, and `qualification-results.xml` to keep local environments and generated data out of ordinary commits. It also ignores caches and demo output. Already tracked files require separate handling by Git.
 
@@ -357,7 +357,7 @@ Current limits include fixed image geometry, an excluded rim, simple shapes, lim
 | How do you prove the tests catch a regression? | Q09 raises the threshold to 100 and checks that a normally passing detection assertion fails |
 | Why are all tests green if some defects are missed? | The faint-case test expects and verifies a miss; normal detection cases require successful matches |
 | Does the output identify scratches? | The inspector reports component centers and areas. The generator supplies the known shape labels |
-| What have you verified on GitHub? | A workflow is configured locally. Confirm its hosted run before claiming successful CI execution |
+| What have you verified on GitHub? | The first hosted run passed on Linux with Python 3.12, and its test report was uploaded |
 | What was your own contribution? | Describe the parts you actually implemented, ran, investigated, or revised and explain the assistance you used |
 
 ### A three-minute demonstration
